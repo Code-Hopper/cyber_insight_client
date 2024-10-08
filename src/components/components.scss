@@ -1,0 +1,160 @@
+.NotFound-Container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+// navbar dropdown
+.navbar-main-container {
+    position: relative;
+    z-index: 99999999999999;
+}
+
+.navbar-dropdown-container {
+
+    position: relative;
+
+    .login-dropdown {
+        display: none;
+        overflow: hidden;
+        position: absolute;
+        background-color: white;
+        width: 300px;
+        left: 50%;
+        top: 100%;
+        z-index: 1000000 !important;
+        transform: translateX(-50%);
+    }
+
+}
+
+.navbar-dropdown-container:hover {
+    .login-dropdown {
+        display: initial;
+    }
+}
+
+.heros-main-container {
+    background-color: #0b0b25;
+    padding: 10% 0%;
+    height: 90vh;
+
+    .heros-text {
+
+        .heros-title {
+            font-size: 6rem;
+            color: var(--bs-warning);
+        }
+
+        .heros-sub-title {
+            font-size: 2.5rem;
+            color: var(--bs-light);
+        }
+
+        .heros-extra-text {
+            color: var(--bs-secondary);
+            text-align: justify;
+        }
+
+        .heros-cta {
+
+            .heros-button {
+                background-color: var(--bs-warning);
+                border: none;
+                outline: none;
+                color: var(--bs-dark);
+                font-weight: bold;
+                padding: 1rem 2rem;
+            }
+
+        }
+
+    }
+
+}
+
+.heros-media {
+    position: relative;
+
+    .platform {
+        z-index: 1;
+        animation: platform 15s linear infinite, fade-in 1.6s ease forwards .5s;
+    }
+
+    .bot {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 150% !important;
+        z-index: 2;
+    }
+
+    @keyframes platform {
+        0% {
+            transform: rotateX(60deg) rotate(0deg);
+        }
+
+        100% {
+            transform: rotateX(60deg) rotate(360deg);
+        }
+    }
+
+}
+
+.courses-list-container {
+    overflow: hidden;
+}
+
+// popup login register form
+
+#loginRegisterPopUp {
+    width: 500px;
+    height: 450px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999999999;
+    background-color: var(--bs-light);
+    outline: 100vh solid rgba(0, 0, 0, 0.5);
+    border-radius: 14px;
+    // .student-login-register-form {
+    // }
+}
+
+.student-login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    .student-login-form-input,
+    .student-login-form-input:focus {
+        border: 0;
+        outline: none;
+        background-color: transparent;
+        border-bottom: 2px solid var(--bs-secondary);
+    }
+
+}
+
+// student profile 
+
+.student-profile-container {
+    width: 75%;
+    // height: 500px;
+}
+
+// tools
+
+.tool-pop-up {
+    width: 90%;
+    height: 80vh;
+    outline: 90vh solid rgba(0, 0, 0, 0.5);
+    background-color: var(--bs-light);
+    position: absolute !important;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
