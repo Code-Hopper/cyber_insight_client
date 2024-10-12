@@ -9,8 +9,8 @@ const Heros = () => {
                 <div className="row">
                     <div className='col heros-media'>
                         {/* heros media */}
-                        <img src={bot} class="bot w-100" alt="" />
-                        <img src={platform} class="platform w-100" alt="" />
+                        <img src={bot} className="bot w-100" alt="" />
+                        <img src={platform} className="platform w-100" alt="" />
                     </div>
                     <div className='col heros-text d-flex flex-column align-items-end gap-3'>
                         <h1 className='heros-title'>Cyber Insight</h1>

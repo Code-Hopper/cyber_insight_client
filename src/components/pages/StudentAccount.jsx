@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../includes/header.jsx'
 import { authUser } from '../auth.js'
+import PleaseLogin from '../sections/PleaseLogin.jsx'
 
 
 const StudentAccount = () => {
@@ -9,6 +10,8 @@ const StudentAccount = () => {
     let navigate = useNavigate()
 
     let [studentData, setStudentData] = useState()
+
+    let [pleaseLoginBoolean, setPleaseLoginBoolean] = useState(false)
 
     let validateAdmin = async () => {
         try {
@@ -42,6 +45,8 @@ const StudentAccount = () => {
     return (
         <>
             <Header />
+
+            <PleaseLogin openPleaseLogin={pleaseLoginBoolean} openPleaseLoginHandler={setPleaseLoginBoolean} />
 
             <div className='container-fluid'>
                 <div className='container p-5 d-flex justify-content-center'>

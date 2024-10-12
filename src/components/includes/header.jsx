@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { SiCyberdefenders } from "react-icons/si";
-import { FaRegUserCircle } from "react-icons/fa";
+import { FaRegUserCircle, FaSadCry } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import LoginRegisterPopUp from "../sections/LoginRegisterPopUp"
@@ -21,7 +21,10 @@ const Header = () => {
     }
 
     let checkStudnetLogedIn = async (e) => {
+
         try {
+
+            // auth using authTool function
 
             let validUser = await authUser()
 
@@ -35,11 +38,17 @@ const Header = () => {
 
             setCheckIfStudentLogedIn(true)
 
+            return true
 
         } catch (err) {
+
             console.log(err)
+
             setCheckIfStudentLogedIn(false)
+            return false
+
         }
+
     }
 
     useEffect(() => {
