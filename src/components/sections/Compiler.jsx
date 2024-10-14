@@ -25,6 +25,7 @@ const Compiler = () => {
       });
       
       setOutput(response.data.output);
+      console.log(response.data.output)
     } catch (error) {
       setOutput('Error executing the code');
     }

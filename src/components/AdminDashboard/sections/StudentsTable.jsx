@@ -8,33 +8,49 @@ const StudentsTable = () => {
 
     useEffect(() => {
         const fetchStudents = async () => {
-            const token = localStorage.getItem('adminToken'); // Get the token from localStorage
+            const token = localStorage.getItem('adminToken');
 
             if (!token) {
-                navigate('/login'); // Redirect to login if no token
+                navigate('/login');
                 return;
             }
 
             try {
-                // Fetch students from the backend
-                const response = await axios({
-                    method: 'get',
-                    url: `${process.env.REACT_APP_API_CALL_ADDRESS}/admin/dashboard/students`,
+                const response = await axios.get(`${process.env.REACT_APP_API_CALL_ADDRESS}/admin/dashboard/students`, {
                     headers: {
-                        'Authorization': `Bearer ${token}` // Send the token in headers for authentication
+                        'Authorization': token
                     }
                 });
-
-                setStudents(response.data); // Set students data
-
+                setStudents(response.data);
             } catch (error) {
                 console.error('Error fetching students:', error);
-                // navigate('/login'); // Redirect to login if token is invalid
             }
         };
 
         fetchStudents();
     }, [navigate]);
+
+    // Handle student deletion
+    const deleteStudent = async (id) => {
+        const token = localStorage.getItem('adminToken');
+        if (!token) {
+            navigate('/login');
+            return;
+        }
+
+        try {
+            await axios.delete(`${process.env.REACT_APP_API_CALL_ADDRESS}/admin/dashboard/studentsdelete/${id}`, {
+                headers: {
+                    'Authorization': token
+                }
+            });
+
+            // Update the state to remove the deleted student
+            setStudents(students.filter(student => student._id !== id));
+        } catch (error) {
+            console.error('Error deleting student:', error);
+        }
+    };
 
     return (
         <div className='p-5'>
@@ -64,7 +80,14 @@ const StudentsTable = () => {
                             <td>{student.email}</td>
                             <td>{student.currentEducation}</td>
                             <td>{student.intresetTopics}</td>
-                            <td><button className='btn btn-danger py-0 px-2'>Delete</button></td>
+                            <td>
+                                <button
+                                    className='btn btn-danger py-0 px-2'
+                                    onClick={() => deleteStudent(student._id)}
+                                >
+                                    Delete
+                                </button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>

@@ -15,6 +15,7 @@ import Tools from './components/pages/Tools.jsx'
 import SelectedTool from './components/pages/SelectedTool.jsx'
 import Adminlogin from './components/AdminDashboard/sections/Adminlogin.jsx'
 import Dashboard from './components/AdminDashboard/Dashboard.jsx'
+import { Course } from "./components/pages/Course.jsx"
 
 const App = () => {
     return (
@@ -34,6 +35,8 @@ const App = () => {
                     {/* tools  */}
 
                     <Route path='/tools/:id/:tool' element={<SelectedTool />} />
+
+                    <Route path='/course/:coursetitle' element={<Course />} />
 
                     {/* admin sections */}
 

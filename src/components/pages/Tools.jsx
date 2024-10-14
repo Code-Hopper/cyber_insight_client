@@ -4,8 +4,6 @@ import { useNavigate } from 'react-router-dom'
 import { authUser } from '../auth'
 import { Link } from 'react-router-dom'
 
-import Compiler from '../sections/Compiler'
-
 const Tools = () => {
     let navigate = useNavigate()
 
@@ -68,7 +66,9 @@ const Tools = () => {
                                         <p>
                                             Specialized course content for learning coding languages.
                                         </p>
-                                        <button className='btn btn-primary'>Check</button>
+                                        <Link className='btn btn-primary' to="/">
+                                            Check
+                                        </Link>
                                     </div>
                                     <div className='col-5 shadow p-2 tool tool-password-manager'>
                                         <span className='fw-bold fs-1 text-warning'>Password Manager</span>

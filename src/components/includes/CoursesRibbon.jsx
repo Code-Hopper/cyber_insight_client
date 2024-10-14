@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react';
 import axios from 'axios';  // Import axios for making API calls
 import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
+import { Link } from 'react-router-dom';  // Import Link for navigation
 
 const CoursesRibbion = () => {
   const [courses, setCourses] = useState([]);  // State to hold the courses
@@ -43,21 +44,26 @@ const CoursesRibbion = () => {
       </div>
       <div
         ref={containerRef}  // Attach the ref to the container
-        className='px-5 courses-list-container d-flex gap-2 flex-nowrap'
+        className='px-5 courses-list-container d-flex gap-2 flex-nowrap position-relative z-3'
         style={{ overflowX: 'hidden', whiteSpace: 'nowrap' }}  // Adjust padding to avoid button overlap
       >
         {error && <span>{error}</span>} {/* Display error if any */}
-        
+
         {/* Courses mapped */}
-        {
-          courses.length > 0 ? (
-            courses.map((course, index) => (
-              <span key={index} className='fw-bolder px-3'>{course.title}</span>
-            ))
-          ) : (
-            <span>Loading courses...</span>
-          )
-        }
+        {courses.length > 0 ? (
+          courses.map((course, index) => (
+            <Link 
+              key={index}
+              to={`/course/${encodeURIComponent(course.title)}`}  // Set URL to include the course title
+              state={{ course }}  // Pass the course object as state
+              className='fw-bolder px-3 nav-link'
+            >
+              {course.title}
+            </Link>
+          ))
+        ) : (
+          <span>Loading courses...</span>
+        )}
       </div>
 
       <style jsx>{`

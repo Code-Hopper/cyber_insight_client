@@ -158,3 +158,30 @@
     left: 50%;
     transform: translate(-50%,-50%);
 }
+
+.course-heros {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+    height: 450px;
+    overflow: hidden;
+
+    .course-img {
+        grid-column: 1/ span 2; /* Place image in the first column */
+        grid-row: 1/2; /* Full row height */
+        background-color: red;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .course-title {
+        grid-column: 1/3; /* Place title in the second column */
+        grid-row: 1/2; /* Full row height */
+        background-color: rgba(0, 0, 0, 0.5);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+}
