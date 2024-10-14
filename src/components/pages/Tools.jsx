@@ -42,8 +42,8 @@ const Tools = () => {
                         <div className='container'>
                             <div className='tools-container-complete py-5'>
                                 <span className='fw-semibold fs-2 text-center'> Use Our Tools</span>
-                                <div className='row py-4 gap-2'>
-                                    <div className='col shadow p-2 tool tool-compiler'>
+                                <div className='row py-4 gap-3 justify-content-center'>
+                                    <div className='col-5 shadow p-2 tool tool-compiler'>
                                         <span className='fw-bold fs-1 text-warning'>Code Compiler</span>
                                         <p>
                                             Start practicing coding with our free code compiler.
@@ -53,7 +53,7 @@ const Tools = () => {
                                             Check
                                         </Link>
                                     </div>
-                                    <div className='col shadow p-2 tool tool-keylogger'>
+                                    <div className='col-5 shadow p-2 tool tool-keylogger'>
                                         <span className='fw-bold fs-1 text-warning'>Key-Logger Script</span>
                                         <p>
                                             Start logging user data with special keylogger web scripts.
@@ -63,12 +63,21 @@ const Tools = () => {
                                             Check
                                         </Link>
                                     </div>
-                                    <div className='col shadow p-2 tool tool-password-manager'>
+                                    <div className='col-5 shadow p-2 tool tool-password-manager'>
                                         <span className='fw-bold fs-1 text-warning'>Learn to Code</span>
                                         <p>
                                             Specialized course content for learning coding languages.
                                         </p>
                                         <button className='btn btn-primary'>Check</button>
+                                    </div>
+                                    <div className='col-5 shadow p-2 tool tool-password-manager'>
+                                        <span className='fw-bold fs-1 text-warning'>Password Manager</span>
+                                        <p>
+                                            Secure and encrypted password manager for all your needs.
+                                        </p>
+                                        <Link className='btn btn-primary' to={`/tools/${studentDataTools._id}/password-manager`}>
+                                            Check
+                                        </Link>
                                     </div>
                                 </div>
                             </div>

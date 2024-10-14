@@ -1,42 +1,62 @@
-import React, { useRef } from 'react';
-
-import { MdKeyboardArrowLeft } from "react-icons/md";
-import { MdKeyboardArrowRight } from "react-icons/md";
-
+import React, { useRef, useState, useEffect } from 'react';
+import axios from 'axios';  // Import axios for making API calls
+import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from "react-icons/md";
 
 const CoursesRibbion = () => {
-  let courses = ["course 1", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course", "course"];
-  
-  const containerRef = useRef(null);  // Create a ref for the scrollable container
+  const [courses, setCourses] = useState([]);  // State to hold the courses
+  const [error, setError] = useState('');      // State to handle any errors
+  const containerRef = useRef(null);  // Ref for the scrollable container
 
-  // Function to scroll left (previous)
+  // Fetch courses from the backend
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_CALL_ADDRESS}/admin/dashboard/allCourses`);
+        setCourses(response.data.allCourses);  // Set the courses from the response
+      } catch (err) {
+        setError('Unable to fetch courses');  // Handle any errors
+        console.error(err);
+      }
+    };
+    fetchCourses();
+  }, []);  // Empty dependency array ensures this runs only once
+
+  // Scroll left (previous)
   const scrollLeft = () => {
     containerRef.current.scrollBy({ left: -200, behavior: 'smooth' });
   };
 
-  // Function to scroll right (next)
+  // Scroll right (next)
   const scrollRight = () => {
     containerRef.current.scrollBy({ left: 200, behavior: 'smooth' });
   };
 
   return (
     <div className='courses-ribbion bg-light container-fluid shadow-lg position-relative z-3'>
-      <div className='courses-ribbion-button w-100 d-flex justify-content-between position-absolute start-50 top-50 translate-middle '>
-        <button className='scroll-btn btn btn-warning py-0 rounded-0 fw-bolder' onClick={scrollLeft}><MdKeyboardArrowLeft/></button>
-        <button className='scroll-btn btn btn-warning py-0 rounded-0 fw-bolder' onClick={scrollRight}><MdKeyboardArrowRight/></button>
+      <div className='courses-ribbion-button w-100 d-flex justify-content-between position-absolute start-50 top-50 translate-middle'>
+        <button className='scroll-btn btn btn-warning py-0 rounded-0 fw-bolder' onClick={scrollLeft}>
+          <MdKeyboardArrowLeft />
+        </button>
+        <button className='scroll-btn btn btn-warning py-0 rounded-0 fw-bolder' onClick={scrollRight}>
+          <MdKeyboardArrowRight />
+        </button>
       </div>
       <div
         ref={containerRef}  // Attach the ref to the container
         className='px-5 courses-list-container d-flex gap-2 flex-nowrap'
-        style={{ overflowX: 'hidden', whiteSpace: 'nowrap'}}  // Adjust padding to avoid button overlap
+        style={{ overflowX: 'hidden', whiteSpace: 'nowrap' }}  // Adjust padding to avoid button overlap
       >
-        {/* courses mapped */}
+        {error && <span>{error}</span>} {/* Display error if any */}
+        
+        {/* Courses mapped */}
         {
-          courses.map((course, index) => {
-            return (
-              <span key={index} className='fw-bolder px-3'>{course}</span>
-            );
-          })
+          courses.length > 0 ? (
+            courses.map((course, index) => (
+              <span key={index} className='fw-bolder px-3'>{course.title}</span>
+            ))
+          ) : (
+            <span>Loading courses...</span>
+          )
         }
       </div>
 
@@ -54,6 +74,6 @@ const CoursesRibbion = () => {
       `}</style>
     </div>
   );
-}
+};
 
 export default CoursesRibbion;

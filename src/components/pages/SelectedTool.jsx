@@ -5,6 +5,7 @@ import Header from '../includes/header'
 import { Link } from 'react-router-dom'
 import Keylogger from '../sections/Keylogger'
 import { authTool } from '../authTool.js'
+import PasswordManager from '../sections/PasswordManager.jsx'
 
 const SelectedTool = () => {
     // Get the parameters from the URL
@@ -18,9 +19,15 @@ const SelectedTool = () => {
         switch (tool) {
             case "code-compiler":
                 return <Compiler />
+            break;
             case "keylogger":
                 // Replace this with the actual Keylogger component when available
                 return <Keylogger />
+            break;
+            case "password-manager":
+                // Replace this with the actual Keylogger component when available
+                return <PasswordManager />
+            break;
             default:
                 return <div>Tool not found</div>
         }

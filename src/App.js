@@ -13,6 +13,8 @@ import { NotFound } from "./components/pages/NotFound.jsx"
 import StudentAccount from './components/pages/StudentAccount.jsx'
 import Tools from './components/pages/Tools.jsx'
 import SelectedTool from './components/pages/SelectedTool.jsx'
+import Adminlogin from './components/AdminDashboard/sections/Adminlogin.jsx'
+import Dashboard from './components/AdminDashboard/Dashboard.jsx'
 
 const App = () => {
     return (
@@ -32,6 +34,12 @@ const App = () => {
                     {/* tools  */}
 
                     <Route path='/tools/:id/:tool' element={<SelectedTool />} />
+
+                    {/* admin sections */}
+
+                    <Route path='/admin' element={<Adminlogin />} />
+
+                    <Route path='/dashboard' element={<Dashboard />} />
 
                 </Routes>
 
