@@ -4,6 +4,7 @@ import { SiCyberdefenders } from "react-icons/si";
 import axios from 'axios';
 import StudentsTable from './sections/StudentsTable';
 import CreateCourse from "./sections/ManageCourses";
+import QuizManagement from './sections/QuizManagement';
 
 const Dashboard = () => {
     let navigate = useNavigate();
@@ -55,7 +56,7 @@ const Dashboard = () => {
 
     return (
         <>
-            <div className='container-fluid bg-dark p-2'>
+            <div className='container-fluid bg-dark p-2 position-sticky top-0'>
                 <div className='container d-flex justify-content-between'>
                     <h1 className='navbar-brand d-flex gap-1 align-items-center'>
                         <SiCyberdefenders className='text-warning' size={"25px"} /> <span className='text-light'>Cyber Insight</span>
@@ -66,14 +67,51 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            <div className='text-center py-3'>
-                <button onClick={toggleCourseManagement} className='btn btn-primary'>
-                    {isManagingCourses ? 'View All Students' : 'Manage Courses'}
-                </button>
-            </div>
 
-            {/* Conditionally render either the StudentsTable or the CreateCourse component */}
-            {isManagingCourses ? <CreateCourse /> : <StudentsTable />}
+            <ul class="nav my-3 py-5 gap-2 justify-content-center" id="ex1" role="tablist">
+                <li class="bg-primary nav-item rounded" role="presentation">
+                    <a
+                        class="text-light fw-bold nav-link active"
+                        data-bs-toggle="tab"
+                        href="#manage-student"
+                    >
+                        Manage Student
+                    </a>
+                </li>
+                <li class="bg-primary nav-item rounded" role="presentation">
+                    <a
+                        class="text-light fw-bold nav-link"
+                        id="ex1-tab-2"
+                        data-bs-toggle="tab"
+                        href="#manage-courses"
+                    >
+                        Manage Courses
+                    </a>
+                </li>
+                <li class="bg-primary nav-item rounded" role="presentation">
+                    <a
+                        class="text-light fw-bold nav-link"
+                        id="ex1-tab-3"
+                        data-bs-toggle="tab"
+                        href="#manage-quiz"
+                    >
+                        Manage Quiz
+                    </a>
+                </li>
+            </ul>
+
+            {/* Tab content */}
+            <div className='tab-content mt-3'>
+                <div className='tab-pane fade show active' id='manage-student'>
+                    <StudentsTable />
+                </div>
+                <div className='tab-pane fade' id='manage-courses'>
+                    <CreateCourse />
+                </div>
+                <div className='tab-pane fade' id='manage-quiz'>
+                    <QuizManagement />
+                </div>
+            </div>
         </>
     );
 };

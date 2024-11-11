@@ -3,14 +3,14 @@ import { Editor } from '@monaco-editor/react';
 import axios from 'axios';
 
 const Compiler = () => {
-  const [code, setCode] = useState('// Write your javascript code here');
+  const [code, setCode] = useState('// Write your code here');
   const [output, setOutput] = useState('');
+  const [language, setLanguage] = useState('javascript');
 
   const handleRunCode = async () => {
     try {
       let token = localStorage.getItem("token");
 
-      // Wrap code inside a JSON object
       const response = await axios({
         method: 'POST',
         url: `${process.env.REACT_APP_API_CALL_ADDRESS}/api/runcode`,
@@ -18,26 +18,38 @@ const Compiler = () => {
           'Authorization': token,
           'Content-Type': 'application/json'
         },
-        // Send the code inside a JSON object
         data: {
-          code: code
+          code: code,
+          language: language // Include selected language
         }
       });
-      
+
       setOutput(response.data.output);
-      console.log(response.data.output)
+      console.log(response.data.output);
     } catch (error) {
       setOutput('Error executing the code');
     }
   };
 
+  const handleLanguageChange = (e) => {
+    setLanguage(e.target.value);
+    setCode('// Write your ' + e.target.value + ' code here');
+  };
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-      <h2>Code Editor</h2>
+      <h2>Multi-Language Code Editor</h2>
+      <select onChange={handleLanguageChange} value={language} style={{ marginBottom: '10px' }}>
+        <option value="javascript">JavaScript</option>
+        <option value="c">C</option>
+        <option value="cpp">C++</option>
+        <option value="java">Java</option>
+        {/* Add more languages as needed */}
+      </select>
       <Editor
         height="400px"
         width="800px"
-        language="javascript"
+        language={language}
         theme="vs-dark"
         value={code}
         onChange={(newValue) => setCode(newValue)}

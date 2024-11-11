@@ -1,6 +1,7 @@
 import React from 'react'
 import bot from "../media/bot.png"
 import platform from "../media/platform.png"
+import { Link } from 'react-router-dom'
 
 const Heros = () => {
     return (
@@ -20,7 +21,7 @@ const Heros = () => {
                         </p>
                         <div className='heros-cta'>
                             <button className='heros-button rounded'>
-                                Start Now
+                                <Link className='nav-link' to="/tools">Start Now</Link>
                             </button>
                         </div>
                     </div>

@@ -16,11 +16,6 @@ const Home = () => {
 
             <Heros />
 
-            {/* please login message pop up */}
-            {/* only on this page because when user will be redirected they will land on this page where please login popup will appear */}
-
-            <PleaseLogin />
-
         </>
     )
 }

@@ -50,9 +50,9 @@ const PleaseLogin = () => {
     }, [])
 
     return (
-        <div className={studentPopUp.open ? "alert alert-danger position-absolute top-50 start-50 translate-middle z-3 d-flex gap-1" : "collapse"}>
+        <div className={studentPopUp.open ? "pelase-login-alert alert alert-danger position-absolute top-50 start-50 translate-middle z-3 d-flex gap-1" : "collapse"}>
             <span>Please Login/Register To use This Feature</span>
-            <button className='btn btn-danger position-absolute top-0 start-100 translate-middle rounded-circle px-2' onClick={() => {
+            {/* <button className='btn btn-danger position-absolute top-0 start-100 translate-middle rounded-circle px-2' onClick={() => {
                 setStudentPopUp(
                     {
                         open: false,
@@ -61,7 +61,7 @@ const PleaseLogin = () => {
                 )
             }}>
                 <RxCross2 />
-            </button>
+            </button> */}
         </div>
     )
 }

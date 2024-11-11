@@ -6,6 +6,8 @@ import { Link } from 'react-router-dom'
 import Keylogger from '../sections/Keylogger'
 import { authTool } from '../authTool.js'
 import PasswordManager from '../sections/PasswordManager.jsx'
+import HasingTool from "../sections/HasingTool.jsx"
+import QuickQuiz from '../sections/QuickQuiz.jsx'
 
 const SelectedTool = () => {
     // Get the parameters from the URL
@@ -19,6 +21,14 @@ const SelectedTool = () => {
         switch (tool) {
             case "code-compiler":
                 return <Compiler />
+            break;
+            case "quick-quiz":
+                // Replace this with the actual Keylogger component when available
+                return <QuickQuiz />
+            break;
+            case "hasing-tool":
+                // Replace this with the actual Keylogger component when available
+                return <HasingTool />
             break;
             case "keylogger":
                 // Replace this with the actual Keylogger component when available

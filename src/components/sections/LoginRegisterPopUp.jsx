@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import axios from "axios"
+import React, { useState } from 'react';
+import axios from "axios";
 
 import { SiCyberdefenders } from "react-icons/si";
 import { FaEye } from "react-icons/fa";
@@ -7,15 +7,12 @@ import { FaEyeSlash } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import { useNavigate } from 'react-router-dom';
 
-
 const LoginRegisterPopUp = (props) => {
+  let navigate = useNavigate();
 
-  let navigate = useNavigate()
+  let [showPassword, setShowPassword] = useState(false);
 
-  let [showPassword, setShowPassword] = useState(false)
-
-  // register user 
-
+  // Register user state
   let [student, setStudent] = useState({
     name: "",
     email: "",
@@ -23,24 +20,28 @@ const LoginRegisterPopUp = (props) => {
     dob: "",
     password: "",
     currentEducation: "",
-    intrestedTopics: ""
-  })
+    intrestedTopics: "",
+  });
 
+  // Login user state
   let [studentLogin, setStudentLogin] = useState({
     email: "",
-    password: ""
-  })
+    password: "",
+  });
 
-  let [registrationStatusMessage, setRegistrationStatusMessage] = useState(false)
+  // Status messages
+  let [registrationStatusMessage, setRegistrationStatusMessage] = useState(false);
+  let [loginStatusMessage, setLoginStatusMessage] = useState(false);
 
-  let [loginStatusMessage, setLoginStatusMessage] = useState(false)
+  // Password validation state
+  let [passwordError, setPasswordError] = useState("");
 
+  // Handle student input change
   let handelStudentInputChange = (e) => {
-    let { name, value } = e.target
+    let { name, value } = e.target;
 
     // Format the date if the field is 'dob'
     if (name === 'dob') {
-      // Ensure date format is 'YYYY-MM-DD'
       const formattedDate = new Date(value).toISOString().split('T')[0];
       value = formattedDate;
     }
@@ -48,32 +49,47 @@ const LoginRegisterPopUp = (props) => {
     setStudent((prev) => {
       return {
         ...prev, [name]: value
-      }
-    })
-  }
+      };
+    });
+  };
 
+  // Password validation function
+  const validatePassword = (password) => {
+    // Regular expression for password validation
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    return passwordRegex.test(password);
+  };
+
+  // Handle register student
   let handelRegisterStudent = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     let result;
+
+    // Validate password
+    if (!validatePassword(student.password)) {
+      setPasswordError("Password must be at least 8 characters long, contain one uppercase letter, one lowercase letter, one number, and one special character.");
+      return;
+    } else {
+      setPasswordError(""); // Clear error if password is valid
+    }
+
     try {
-
-      console.log(student)
-
+      console.log(student);
       result = await axios({
         method: "POST",
         url: `${process.env.REACT_APP_API_CALL_ADDRESS}/action/registerStudent`,
-        data: student
-      })
+        data: student,
+      });
 
-      console.log("posted !", result)
+      console.log("posted !", result);
 
       if (result.status !== 202) {
-        throw ("err while registering student !")
+        throw ("Error while registering student!");
       }
 
-      console.log(result.data.message)
+      console.log(result.data.message);
 
-      setRegistrationStatusMessage(result.data.message)
+      setRegistrationStatusMessage(result.data.message);
 
       setStudent({
         name: "",
@@ -83,11 +99,10 @@ const LoginRegisterPopUp = (props) => {
         password: "",
         currentEducation: "",
         intrestedTopics: ""
-      })
-
+      });
     } catch (err) {
-      console.log("error while register student !", err)
-      console.log(err.response)
+      console.log("Error while registering student!", err);
+      console.log(err.response);
       setRegistrationStatusMessage(err.response.data.problem);
       setStudent({
         name: "",
@@ -97,50 +112,50 @@ const LoginRegisterPopUp = (props) => {
         password: "",
         currentEducation: "",
         intrestedTopics: ""
-      })
+      });
     }
-  }
+  };
 
+  // Handle login change
   let handelLoginChange = (e) => {
-    let { name, value } = e.target
+    let { name, value } = e.target;
     setStudentLogin((prev) => {
       return ({
         ...prev, [name]: value
-      })
-    })
-  }
+      });
+    });
+  };
 
+  // Handle login form submit
   let handelLoginFormSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    let result
+    let result;
 
     try {
-
       result = await axios({
         method: 'POST',
         url: `${process.env.REACT_APP_API_CALL_ADDRESS}/action/loginstudent`,
-        data: studentLogin
-      })
+        data: studentLogin,
+      });
 
       if (result.status !== 202) {
-        throw ("err in student loginin")
+        throw new Error("Error in student login");
       }
 
-      setLoginStatusMessage(result.data.message)
+      setLoginStatusMessage(result.data.message);
 
-      localStorage.setItem("token", result.data.token)
+      localStorage.setItem("token", result.data.token);
 
-      // redirect user to account page
-
-      navigate("/my-account")
+      // Reload the same page after successful login
+      window.location.reload();
 
     } catch (err) {
-      console.log("err in student login ! ", err)
-      console.log(err.response)
-      setLoginStatusMessage(err.response.data.problem)
+      console.log("Error in student login: ", err);
+      console.log(err.response);
+      setLoginStatusMessage(err.response?.data?.problem || "Login failed");
     }
-  }
+  };
 
   return (
     <>
@@ -168,35 +183,29 @@ const LoginRegisterPopUp = (props) => {
             </ul>
           </div>
 
-          {/* tabs content */}
+          {/* Tabs content */}
           <div className='login-register-tabs-content'>
             <div className="tab-content px-5 py-3">
               <div id="pop-up-login" className="tab-pane fade show active">
-                <h5 className='fw-thin text-center mb-5'>Welcome Back !</h5>
-                <div>
-                  <form className='student-login-form' onSubmit={handelLoginFormSubmit}>
-                    <input onChange={handelLoginChange} type="text" className='student-login-form-input' placeholder='User Name' name='email' value={studentLogin.email} required />
-                    <div className='student-login-password d-flex align-items-center position-relative'>
-                      <input onChange={handelLoginChange} type={showPassword ? "text" : "password"} className='student-login-form-input flex-grow-1' placeholder='Password' name='password' value={studentLogin.password} required />
-
-                      <button type='button' className='btn position-absolute end-0 bottom-0 px-0' onClick={() => { setShowPassword(!showPassword) }}>
-                        {showPassword ? <FaEyeSlash /> : <FaEye />}
-                      </button>
+                <h5 className='fw-thin text-center mb-5'>Welcome Back!</h5>
+                <form className='student-login-form' onSubmit={handelLoginFormSubmit}>
+                  <input onChange={handelLoginChange} type="text" className='student-login-form-input' placeholder='User Name' name='email' value={studentLogin.email} required />
+                  <div className='student-login-password d-flex align-items-center position-relative'>
+                    <input onChange={handelLoginChange} type={showPassword ? "text" : "password"} className='student-login-form-input flex-grow-1' placeholder='Password' name='password' value={studentLogin.password} required />
+                    <button type='button' className='btn position-absolute end-0 bottom-0 px-0' onClick={() => { setShowPassword(!showPassword) }}>
+                      {showPassword ? <FaEyeSlash /> : <FaEye />}
+                    </button>
+                  </div>
+                  <div className='d-flex flex-column justify-content-center align-items-center'>
+                    <div className='d-flex gap-1'>
+                      <button type='submit' className='btn btn-primary'>Submit</button>
+                      <button type='reset' className='btn btn-dark'>Reset</button>
                     </div>
-
-                    <div className='d-flex flex-column justify-content-center align-items-center'>
-                      <div className='d-flex gap-1'>
-                        <button type='submit' className='btn btn-primary'>submit</button>
-                        <button type='reset' className='btn btn-dark'>reset</button>
-                      </div>
-                      <span className='fw-semibold d-flex align-items-center gap-1'>Don't have an account?
-                        <button type='button' className='btn p-0 text-primary fw-bolder' data-bs-toggle="tab" data-bs-target="#pop-up-register"> Register!</button>
-                      </span>
-                    </div>
-                  </form>
-                </div>
-
-                {/* message for success or error */}
+                    <span className='fw-semibold d-flex align-items-center gap-1'>Don't have an account?
+                      <button type='button' className='btn p-0 text-primary fw-bolder' data-bs-toggle="tab" data-bs-target="#pop-up-register"> Register!</button>
+                    </span>
+                  </div>
+                </form>
                 {
                   loginStatusMessage ?
                     <div className='alert alert-warning text-center position-relative'>
@@ -210,11 +219,9 @@ const LoginRegisterPopUp = (props) => {
                     </div>
                     : null
                 }
-
               </div>
 
-              {/* register */}
-
+              {/* Register */}
               <div id="pop-up-register" className="tab-pane fade">
                 <form onSubmit={handelRegisterStudent}>
                   <div className='register-form-container d-flex flex-column gap-1'>
@@ -235,27 +242,24 @@ const LoginRegisterPopUp = (props) => {
                       </span>
                       <div className='d-flex gap-1'>
                         <input type="text" onChange={handelStudentInputChange} placeholder='Education' className='form-control' name='currentEducation' value={student.currentEducation} required />
-                        <input type="text" onChange={handelStudentInputChange} placeholder='Intrested Topics In' className='form-control' name='intrestedTopics' value={student.intrestedTopics} required />
+                        <input type="text" onChange={handelStudentInputChange} placeholder='Interested Topics' className='form-control' name='intrestedTopics' value={student.intrestedTopics} required />
                       </div>
                     </div>
                     <div>
                       <span className='px-2 fw-regular'>
-                        Create Password:<span>Atleast 8 char|A-Z,a-z,0-9,sp. char*</span>
+                        Create Password:<span>Atleast 8 chars|A-Z,a-z,0-9,special char*</span>
                       </span>
                       <div className='d-flex flex-column gap-1'>
-                        <input type="text" onChange={handelStudentInputChange} placeholder='password' className='form-control' name='password' value={student.password} required />
-                        {/* add password validation */}
+                        <input type="password" onChange={handelStudentInputChange} placeholder='Password' className='form-control' name='password' value={student.password} required />
+                        {passwordError && <small className="text-danger">{passwordError}</small>}
                       </div>
                     </div>
-                    {/*  */}
                     <div className='d-flex gap-2 justify-content-center py-2'>
-                      <button type='sumbit' className='btn btn-success fw-semibold'>Register</button>
+                      <button type='submit' className='btn btn-success fw-semibold'>Register</button>
                       <button type="reset" className='btn btn-danger fw-semibold'>Reset</button>
                     </div>
                   </div>
                 </form>
-
-                {/* message for success or error */}
                 {
                   registrationStatusMessage ?
                     <div className='alert alert-warning text-center position-relative'>
@@ -269,19 +273,13 @@ const LoginRegisterPopUp = (props) => {
                     </div>
                     : null
                 }
-
               </div>
-
-
             </div>
           </div>
         </div>
       </div>
-
-      {/* alert status */}
-
     </>
-  )
-}
+  );
+};
 
-export default LoginRegisterPopUp
+export default LoginRegisterPopUp;

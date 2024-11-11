@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import Header from '../includes/header'
+import PleaseLogin from '../sections/PleaseLogin'
 import { useNavigate } from 'react-router-dom'
 import { authUser } from '../auth'
 import { Link } from 'react-router-dom'
+import News from '../sections/News'
 
 const Tools = () => {
+
     let navigate = useNavigate()
 
     // Initialize state as null to handle undefined scenarios
@@ -22,7 +25,7 @@ const Tools = () => {
             // console.log(studentDataTools)
         } catch (err) {
             console.log("Unable to validate user!", err)
-            navigate("/")
+            // navigate("/")
         }
     }
 
@@ -34,16 +37,21 @@ const Tools = () => {
     return (
         <>
             <Header />
+            {/* please login message pop up */}
+            {/* only on this page because when user will be redirected they will land on this page where please login popup will appear */}
+
+            <PleaseLogin />
             {
                 studentDataTools ? ( // Check if studentDataTools is available, not setStudentDataTools
                     <div className='container-fluid'>
-                        <div className='container'>
+
+                        <News />
+                        <div className=''>
                             <div className='tools-container-complete py-5'>
-                                <span className='fw-semibold fs-2 text-center'> Use Our Tools</span>
-                                <div className='row py-4 gap-3 justify-content-center'>
-                                    <div className='col-5 shadow p-2 tool tool-compiler'>
+                                <div className='py-4 d-flex flex-column gap-4 justify-content-center'>
+                                    <div style={{ padding: "3rem 25%" }} className='shadow rounded tool tool-compiler'>
                                         <span className='fw-bold fs-1 text-warning'>Code Compiler</span>
-                                        <p>
+                                        <p className=''>
                                             Start practicing coding with our free code compiler.
                                         </p>
                                         {/* adding a key based API call so that any random user may not access tools */}
@@ -51,7 +59,27 @@ const Tools = () => {
                                             Check
                                         </Link>
                                     </div>
-                                    <div className='col-5 shadow p-2 tool tool-keylogger'>
+                                    <div style={{ padding: "3rem 25%" }} className='shadow rounded tool hasing-tool'>
+                                        <span className='fw-bold fs-1 text-warning'>Quick Quiz</span>
+                                        <p className=''>
+                                            Take the quiz learn more. 
+                                        </p>
+                                        {/* adding a key based API call so that any random user may not access tools */}
+                                        <Link className='btn btn-primary' to={`/tools/${studentDataTools._id}/quick-quiz`}>
+                                            Check
+                                        </Link>
+                                    </div>
+                                    <div style={{ padding: "3rem 25%" }} className='shadow rounded tool hasing-tool'>
+                                        <span className='fw-bold fs-1 text-warning'>Hasing Tool</span>
+                                        <p className=''>
+                                            Hash your important data to make it the most secure.
+                                        </p>
+                                        {/* adding a key based API call so that any random user may not access tools */}
+                                        <Link className='btn btn-primary' to={`/tools/${studentDataTools._id}/hasing-tool`}>
+                                            Check
+                                        </Link>
+                                    </div>
+                                    <div style={{ padding: "3rem 25%" }} className='shadow rounded tool tool-keylogger'>
                                         <span className='fw-bold fs-1 text-warning'>Key-Logger Script</span>
                                         <p>
                                             Start logging user data with special keylogger web scripts.
@@ -61,16 +89,16 @@ const Tools = () => {
                                             Check
                                         </Link>
                                     </div>
-                                    <div className='col-5 shadow p-2 tool tool-password-manager'>
+                                    <div style={{ padding: "3rem 25%" }} className='shadow rounded tool tool-password-manager'>
                                         <span className='fw-bold fs-1 text-warning'>Learn to Code</span>
-                                        <p>
+                                        <p className=''>
                                             Specialized course content for learning coding languages.
                                         </p>
                                         <Link className='btn btn-primary' to="/">
                                             Check
                                         </Link>
                                     </div>
-                                    <div className='col-5 shadow p-2 tool tool-password-manager'>
+                                    <div style={{ padding: "3rem 25%" }} className='shadow rounded tool tool-password-manager'>
                                         <span className='fw-bold fs-1 text-warning'>Password Manager</span>
                                         <p>
                                             Secure and encrypted password manager for all your needs.
@@ -84,7 +112,7 @@ const Tools = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className='container'>
+                    <div className='container text-center'>
                         <span className='fw-bolder fs-2 text-danger'>
                             Tools are not available for you!
                         </span>

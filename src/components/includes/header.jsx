@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { SiCyberdefenders } from "react-icons/si";
-import { FaRegUserCircle, FaSadCry } from "react-icons/fa";
+import { FaRegUserCircle, FaHome} from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import LoginRegisterPopUp from "../sections/LoginRegisterPopUp"
@@ -65,21 +65,23 @@ const Header = () => {
 
     return (
         <>
-            <nav className='bg-dark position-relative navbar-main-container'>
+            <nav className='bg-dark position-sticky top-0 navbar-main-container'>
                 <div className='container navbar navbar-expand navbar-dark bg-dark gap-4'>
                     <h1 className='navbar-brand d-flex gap-1 align-items-center'>
                         <SiCyberdefenders className='text-warning' size={"25px"} /> Cyber Insight
                     </h1>
                     <ul className='navbar-nav ms-auto gap-3'>
                         <li className='nav-item'>
-                            <Link className='nav-link' to="/">Home</Link>
+                            <Link className='nav-link' to="/"><FaHome size={"25px"}/></Link>
                         </li>
-                        <li className='nav-item'>
-                            <Link className='nav-link' to="/">Learning</Link>
-                        </li>
-                        <li className='nav-item'>
-                            <Link className='nav-link' to="/tools">Tools</Link>
-                        </li>
+                        {
+                            /* <li className='nav-item'>
+                                <Link className='nav-link' to="/">Learning</Link>
+                            </li>
+                            <li className='nav-item'>
+                                <Link className='nav-link' to="/tools">Tools</Link>
+                            </li> */
+                        }
                     </ul>
                     {/* if student loged in welcome them */}
 
